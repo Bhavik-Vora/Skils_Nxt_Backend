@@ -1,9 +1,7 @@
-import app from "./app.js";
-import dotenv from "dotenv";
-import { connectDB } from "./config/database.js";
 import cloudinary from "cloudinary";
-import RazorPay from "razorpay";
 import nodeCron from "node-cron";
+import app from "./app.js";
+import { connectDB } from "./config/database.js";
 import { Stats } from "./models/statsModel.js";
 
 app.get("/", (req, res) => {

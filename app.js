@@ -1,10 +1,10 @@
 import express, { urlencoded } from "express";
 import {config} from "dotenv";
-import courseRoute from "../backend/routes/courseRoute.js"
-import userRoute from "../backend/routes/userRoute.js"
-import otherRoute from "../backend/routes/otherRoute.js"
-import subscriptionRoute from "../backend/routes/subscriptionRoute.js"
-import {ErrorMiddleware} from "../backend/middlewares/errorMiddleware.js"
+import courseRoute from "./routes/courseRoute.js"
+import userRoute from "./routes/userRoute.js"
+import otherRoute from "./routes/otherRoute.js"
+import subscriptionRoute from "./routes/subscriptionRoute.js"
+import {ErrorMiddleware} from "./middlewares/errorMiddleware.js"
 import cookieParser from "cookie-parser";
 import cors from "cors";
 config({
