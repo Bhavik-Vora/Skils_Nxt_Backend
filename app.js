@@ -35,5 +35,3 @@ app.use("/api/v1/plus",subscriptionRoute);
 app.use("/api/v1/other",otherRoute);
 app.use(ErrorMiddleware)
 export default app;
-
-// mongodb+srv://anonymous:mongourl5631@cluster0.zo8dy.mongodb.net/"//
