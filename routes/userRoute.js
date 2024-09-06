@@ -36,9 +36,6 @@ router.put("/resetpassword/:token", resetPassword);
 router.post("/addtoplaylist", addToPlaylist);
 router.delete("/removefromplaylist", removeFromPlaylist);
 
-//Admin Routes
-router.use(isAuthenticated,isAuthenticatedAdmin);
 
-router.get("/users",getAllUser);
-router.route("/user/:id").put(changeRole).delete(deleteUser)
+
 export default router;

@@ -156,8 +156,8 @@ export const forgetPassword = catchAsyncError(async (req, res, next) => {
     );
   const resetToken = await user.getResetToken();
   await user.save();
-  const message = `Reset your password using the link ${url}. If you didn't request it, no action is needed.`;
   const url = `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`;
+  const message = `Reset your password using the link ${url}. If you didn't request it, no action is needed.`;
 
   await sendEmail(
     user.email,
@@ -302,13 +302,30 @@ export const deleteMyProfile  = catchAsyncError(async (req, res, next) => {
  });
 });
 
+
 User.watch().on("change", async () => {
-  const stats = await Stats.find({}).sort({ createdAt: "desc" }).limit(1);
+  try {
+    const stats = await Stats.find({}).sort({ createdAt: "desc" }).limit(1);
 
-  const subscription = await User.find({ "subscription.status": "active" });
-  stats[0].users = await User.countDocuments();
-  stats[0].subscription = subscription.length;
-  stats[0].createdAt = new Date(Date.now());
+    if (stats.length === 0) {
+      // No stats found, create a new one
+      const newStats = new Stats({
+        users: await User.countDocuments(),
+        subscription: (await User.find({ "subscription.status": "active" })).length,
+        createdAt: new Date(Date.now()),
+      });
+      await newStats.save();
+    } else {
+      // Update the existing stats
+      const subscription = await User.find({ "subscription.status": "active" });
+      stats[0].users = await User.countDocuments();
+      stats[0].subscription = subscription.length;
+      stats[0].createdAt = new Date(Date.now());
+      
+      await stats[0].save();  // Save the updated stats
+    }
 
-  await stats[0].save();
+  } catch (error) {
+    console.error("Error updating stats:", error);
+  }
 });

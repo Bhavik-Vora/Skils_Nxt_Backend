@@ -1,12 +1,11 @@
-import express, { urlencoded } from "express";
-import {config} from "dotenv";
-import courseRoute from "./routes/courseRoute.js"
-import userRoute from "./routes/userRoute.js"
-import otherRoute from "./routes/otherRoute.js"
-import subscriptionRoute from "./routes/subscriptionRoute.js"
-import {ErrorMiddleware} from "./middlewares/errorMiddleware.js"
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import { config } from "dotenv";
+import express from "express";
+import { ErrorMiddleware } from "./middlewares/errorMiddleware.js";
+import adminRoute from "./routes/adminRoute.js";
+import otherRoute from "./routes/otherRoute.js";
+import userRoute from "./routes/userRoute.js";
 config({
     path:"./config/config.env"
 })
@@ -28,10 +27,10 @@ app.use(
     })
   );
 
-app.use("/api/v1/user",courseRoute);
+
 app.use("/api/v1/user",userRoute);
-app.use("/api/v1/admin",userRoute);
-app.use("/api/v1/plus",subscriptionRoute);
+app.use("/api/v1/admin",adminRoute);
 app.use("/api/v1/other",otherRoute);
+
 app.use(ErrorMiddleware)
 export default app;
