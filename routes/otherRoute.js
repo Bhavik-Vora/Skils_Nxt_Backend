@@ -10,9 +10,9 @@ const router = express.Router();
 
 router.post("/contact", contact); //contact us form from user side
 router.post("/courserequest", courseRequest); //course request form from user side
-router.route("/subscribe").post(buySubscription ); //isAuthenticated, 
+router.route("/subscribe").post(isAuthenticated,buySubscription ); 
 //subscibed user for subscription of courses
-router.route("/unsubscribe").post(isSubscriber,removeSubscription );//isAuthenticated,
+router.route("/unsubscribe").post(isAuthenticated,isSubscriber,removeSubscription );
 router.route("/course").get(getAllCourses);
 //unsubscibed user for subscription of courses
 
