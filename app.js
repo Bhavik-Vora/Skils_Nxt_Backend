@@ -7,34 +7,30 @@ import adminRoute from "./routes/adminRoute.js";
 import otherRoute from "./routes/otherRoute.js";
 import userRoute from "./routes/userRoute.js";
 config({
-  path: "./config/config.env",
-});
+    path:"./config/config.env"
+})
 
 const app = express();
 
+
 //middlwares
-app.use(
-  express.urlencoded({
-    extended: true,
-  })
-);
-app.use(express.json());
+app.use(express.urlencoded({
+    extended:true,
+}));
+app.use(express.json())
 app.use(cookieParser());
 app.use(
-  cors({
-    origin:
-      process.env.NODE_ENV === "production"
-        ? "https://your-frontend-url.com"
-        : "http://localhost:3000",
-    credentials: true, // Allow cookies to be sent with requests
-    methods: ["GET", "POST", "PUT", "DELETE"],
-  })
-);
-console.log(process.env.FRONTEND_URL);
+    cors({
+      origin: process.env.FRONTEND_URL,
+      credentials: true,
+      methods: ["GET", "POST", "PUT", "DELETE"],
+    })
+  );
+  console.log(process.env.FRONTEND_URL);
 
-app.use("/api/v1/user", userRoute);
-app.use("/api/v1/admin", adminRoute);
-app.use("/api/v1/other", otherRoute);
+app.use("/api/v1/user",userRoute);
+app.use("/api/v1/admin",adminRoute);
+app.use("/api/v1/other",otherRoute);
 
-app.use(ErrorMiddleware);
+app.use(ErrorMiddleware)
 export default app;

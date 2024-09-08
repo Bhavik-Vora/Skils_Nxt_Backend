@@ -9,10 +9,10 @@ export const sendToken = (res, user, message, statusCode = 200) => {
   });
 
   const options = {
-    maxAge: 15 * 24 * 60 * 60 * 1000,
-    httpOnly: true,
-    secure: isProduction, // Set secure to true only in production
-    sameSite: isProduction ? 'None' : 'Lax', // Set SameSite attribute based on environment
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+    // httpOnly: true,
+    // secure: isProduction, // Set secure to true only in production
+    // sameSite: isProduction ? 'None' : 'Lax', // Set SameSite attribute based on environment
   };
 
   res.status(statusCode).cookie("cookietoken", token, options).json({
