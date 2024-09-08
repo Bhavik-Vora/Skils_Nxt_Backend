@@ -2,9 +2,9 @@ import jwt from "jsonwebtoken";
 
 const cookieOptions = {
     maxAge: 15 * 24 * 60 * 60 * 1000,
-    sameSite: "none", // Adjust according to your requirements
+    sameSite: "lax", // Adjust according to your requirements
     httpOnly: true,
-    secure: true,
+    secure: false,
   };
  
 export const sendToken = (res, user,message,statusCode=200) => {
