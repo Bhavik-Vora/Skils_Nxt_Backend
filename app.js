@@ -19,12 +19,15 @@ app.use(express.urlencoded({
 }));
 app.use(express.json())
 app.use(cookieParser());
-const corsOptions = {
-  origin: process.env.FRONTEND_URL, // Replace this with your frontend URL
-  credentials: true, // Enable sending cookies and credentials
-};
-app.use(cors(corsOptions));
-  
+app.use(
+    cors({
+      origin: process.env.FRONTEND_URL,
+      credentials: true,
+      methods: ["GET", "POST", "PUT", "DELETE"],
+    })
+  );
+  console.log(process.env.FRONTEND_URL);
+
 app.use("/api/v1/user",userRoute);
 app.use("/api/v1/admin",adminRoute);
 app.use("/api/v1/other",otherRoute);
