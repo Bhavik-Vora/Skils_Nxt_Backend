@@ -2,8 +2,8 @@ import jwt from "jsonwebtoken";
 
 const cookieOptions = {
     maxAge: 15 * 24 * 60 * 60 * 1000,
-    sameSite: "lax", // Adjust according to your requirements
-    httpOnly: true,
+    sameSite: "none", // Adjust according to your requirements
+    // httpOnly: true,
     secure: false,
   };
  
