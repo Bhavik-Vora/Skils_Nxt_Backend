@@ -1,14 +1,14 @@
-import { catchAsyncError } from "../middlewares/catchAsyncErrors.js";
-import ErrorHandler from "../utils/errorHandler.js";
-import { User } from "../models/UserModel.js";
-import { cookieOptions, sendToken } from "../utils/sendToken.js";
 import bcryptjs from "bcrypt";
-import { sendEmail } from "../utils/sendEmail.js";
-import crypto from "crypto";
 import cloudinary from "cloudinary";
+import crypto from "crypto";
+import { catchAsyncError } from "../middlewares/catchAsyncErrors.js";
 import { Course } from "../models/CourseModel.js";
+import { Stats } from "../models/statsModel.js";
+import { User } from "../models/UserModel.js";
 import getDataUri from "../utils/dataUri.js";
-import {Stats} from "../models/statsModel.js";
+import ErrorHandler from "../utils/errorHandler.js";
+import { sendEmail } from "../utils/sendEmail.js";
+import { cookieOptions, sendToken } from "../utils/sendToken.js";
 
 export const register = catchAsyncError(async (req, res, next) => {
   const { name, email, password } = req.body;
@@ -67,7 +67,7 @@ export const login = catchAsyncError(async (req, res, next) => {
 export const logout = catchAsyncError(async (req, res, next) => {
   return res
     .status(200)
-    .cookie("token", "",{ ...cookieOptions, maxAge: 0 })
+    .cookie("token", "",{...cookieOptions,maxAge:0})
     .json({
       success: true,
       message: "Logged out successfully",

@@ -5,18 +5,26 @@ import { User } from "../models/UserModel.js";
 
 export const isAuthenticated = async (req, res, next) => {
   const token = req.cookies.token;
+  console.log("Token received:", token); // Debug token presence
+  
   if (!token) {
     return next(new ErrorHandler('Restricted Route: Please Log In to Proceed', 401));
   }
 
   try {
     const decoded = jwt.verify(token, process.env.AUTH_SECRET);
+    // console.log("Decoded token:", decoded); // Debug token decoding
     req.user = await User.findById(decoded._id);
+    if (!req.user) {
+      return next(new ErrorHandler('User not found', 404)); // Check if user exists
+    }
     next();
   } catch (error) {
+    // console.log("JWT Verification Error:", error); // Log verification errors
     return next(new ErrorHandler('Invalid or Expired Token', 401));
   }
 };
+
   
 export const isAuthenticatedAdmin = (req, res, next) => {
   if (req.user.role !== "admin")
