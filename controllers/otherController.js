@@ -9,7 +9,7 @@ export const contact = catchAsyncError(async (req, res) => {
     return next(new ErrorHandler("All fields are mandatory", 400));
 
   const to = process.env.MY_MAIL;
-  const subject = "[Attention Required] New Message From Skils Nxt ";
+  const subject = "📣 Attention Required: New Query Inside! ";
   const text = `I am ${name} and my Email is ${email}. \n${message}`;
 
   await sendEmail(to, subject, text);
@@ -23,28 +23,29 @@ export const contact = catchAsyncError(async (req, res) => {
 export const courseRequest = catchAsyncError(async (req, res) => {
   const { name, email, course } = req.body;
 
-  if (!name || !email || !message)
+  if (!name || !email || !course)
     return next(new ErrorHandler("All fields are mandatory", 400));
 
   const to = process.env.MY_MAIL;
-  const subject = "[Attention Required] New Course Request Received ";
-  const text = `I am ${name} and my Email is ${email}. \n${message}`;
+  const subject = "🎓 New Course Request Received: Action Required!";
+  const text = `I am ${name} and my Email is ${email}. \n${course}`;
 
   await sendEmail(to, subject, text);
 
   res.status(200).json({
     success: true,
-    message: "Your Message Has Been Sent.",
+    message: "Your Request Has Been Sent.",
   });
 });
 
-export const  getDashboardStats = catchAsyncError(async (req, res) => {
+export const getDashboardStats = catchAsyncError(async (req, res) => {
   const stats = await Stats.find({}).sort({ createdAt: "desc" }).limit(12);
   const statsData = [];
 
   for (let i = 0; i < stats.length; i++) {
-    statsData.unshift(stats[i]);  
+    statsData.unshift(stats[i]);
   }
+  
   const requiredSize = 12 - stats.length;
 
   for (let i = 0; i < requiredSize; i++) {
@@ -52,12 +53,15 @@ export const  getDashboardStats = catchAsyncError(async (req, res) => {
       users: 0,
       subscription: 0,
       views: 0,
+      createdAt: new Date(),  // You can adjust this logic as needed
     });
   }
 
   const usersCount = statsData[11].users;
   const subscriptionCount = statsData[11].subscription;
   const viewsCount = statsData[11].views;
+
+  const lastChangeDate = statsData[11].createdAt; // Get the time of the last change
 
   let usersPercentage = 0,
     viewsPercentage = 0,
@@ -81,11 +85,13 @@ export const  getDashboardStats = catchAsyncError(async (req, res) => {
     viewsPercentage = (difference.views / statsData[10].views) * 100;
     subscriptionPercentage =
       (difference.subscription / statsData[10].subscription) * 100;
+    
     if (usersPercentage < 0) usersProfit = false;
     if (viewsPercentage < 0) viewsProfit = false;
     if (subscriptionPercentage < 0) subscriptionProfit = false;
   }
 
+  // Send the last updated date along with other stats
   res.status(200).json({
     success: true,
     stats: statsData,
@@ -98,5 +104,24 @@ export const  getDashboardStats = catchAsyncError(async (req, res) => {
     subscriptionProfit,
     viewsProfit,
     usersProfit,
+    lastChangeDate,  // Added timestamp for the latest change
   });
+});
+
+export const deleteAllStats = catchAsyncError(async (req, res) => {
+  try {
+    const result = await Stats.deleteMany({});
+    console.log('Delete result:', result);
+
+    res.status(200).json({
+      success: true,
+      message: 'All stats have been deleted successfully.',
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Failed to delete stats.',
+      error: error.message,
+    });
+  }
 });

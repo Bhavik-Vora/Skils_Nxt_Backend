@@ -4,7 +4,7 @@ import {
   isAuthenticatedAdmin,
   isSubscriber,
 } from "../middlewares/auth.js";
-import { getDashboardStats } from "../controllers/otherController.js";
+import { deleteAllStats, getDashboardStats } from "../controllers/otherController.js";
 import {
   changeRole,
   deleteUser,
@@ -47,5 +47,7 @@ router.use(isAuthenticated, isAuthenticatedAdmin);
 router.get("/user-stats", getAllUser);
 router.route("/change-role/:id").put(changeRole).delete(deleteUser);
 router.get("/yearly-stats", getDashboardStats);
+router.delete('/stats/delete-all', deleteAllStats);
+
 
 export default router;

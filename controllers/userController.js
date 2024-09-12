@@ -1,7 +1,7 @@
 import { catchAsyncError } from "../middlewares/catchAsyncErrors.js";
 import ErrorHandler from "../utils/errorHandler.js";
 import { User } from "../models/UserModel.js";
-import { sendToken } from "../utils/sendToken.js";
+import { cookieOptions, sendToken } from "../utils/sendToken.js";
 import bcryptjs from "bcrypt";
 import { sendEmail } from "../utils/sendEmail.js";
 import crypto from "crypto";
@@ -67,12 +67,7 @@ export const login = catchAsyncError(async (req, res, next) => {
 export const logout = catchAsyncError(async (req, res, next) => {
   return res
     .status(200)
-    .cookie("cookietoken", "", {
-      maxAge:0, // Expiry in the past (1 hour ago)
-      httpOnly: true,
-      secure: false, // Uncomment if using HTTPS
-      sameSite: "lax" // Adjust based on your needs
-    })
+    .cookie("token", "",{ ...cookieOptions, maxAge: 0 })
     .json({
       success: true,
       message: "Logged out successfully",

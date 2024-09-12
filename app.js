@@ -26,7 +26,6 @@ app.use(
       methods: ["GET", "POST", "PUT", "DELETE"],
     })
   );
-  console.log(process.env.FRONTEND_URL);
 
 app.use("/api/v1/user",userRoute);
 app.use("/api/v1/admin",adminRoute);

@@ -3,18 +3,21 @@ import { catchAsyncError } from "./catchAsyncErrors.js";
 import ErrorHandler from "../utils/errorHandler.js";
 import { User } from "../models/UserModel.js";
 
-export const isAuthenticated = catchAsyncError(async (req, res, next) => {
-  const { cookietoken } = req.cookies;
-  if (!cookietoken)
-    return next(
-      new ErrorHandler("Restricted Route: Please Log In to Proceed", 401)
-    );
-  const decoded = jwt.verify(cookietoken, process.env.JWT_SECRET);
+export const isAuthenticated = async (req, res, next) => {
+  const token = req.cookies.token;
+  if (!token) {
+    return next(new ErrorHandler('Restricted Route: Please Log In to Proceed', 401));
+  }
 
-  req.user = await User.findById(decoded._id);
-  next();
-});
-
+  try {
+    const decoded = jwt.verify(token, process.env.AUTH_SECRET);
+    req.user = await User.findById(decoded._id);
+    next();
+  } catch (error) {
+    return next(new ErrorHandler('Invalid or Expired Token', 401));
+  }
+};
+  
 export const isAuthenticatedAdmin = (req, res, next) => {
   if (req.user.role !== "admin")
     return next(
