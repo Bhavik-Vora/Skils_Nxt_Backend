@@ -1,3 +1,13 @@
+## Live Link
+
+[Live Demo Link](https://skils-nxt-frontend.vercel.app/login)
+
+## LinkedIn Post
+
+[LinkedIn Post Link](https://www.linkedin.com/posts/vorabhavik_webdevelopment-fullstackdevelopment-reactjs-activity-7242519010083278848-e5I4?utm_source=share&utm_medium=member_desktop)
+
+
+
 # Subscription-Based Video Player Web App
 
 🎉 Excited to announce the completion of my latest project—a subscription-based video player web app! 🎥✨
@@ -32,13 +42,6 @@ This app combines seamless user experiences, secure authentication, and powerful
 
 ⚠️ **Disclaimer**: All images, videos, company names, and other intellectual property used in this project are for demonstration purposes only. Full credit goes to the respective original owners.
 
-## Live Link
-
-[Live Demo Link](https://skils-nxt-frontend.vercel.app/login)
-
-## LinkedIn Post
-
-[LinkedIn Post Link](https://www.linkedin.com/posts/vorabhavik_webdevelopment-fullstackdevelopment-reactjs-activity-7242519010083278848-e5I4?utm_source=share&utm_medium=member_desktop)
 
 ---
 
