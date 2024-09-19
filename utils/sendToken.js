@@ -1,9 +1,9 @@
 import jwt from "jsonwebtoken";
 export const cookieOptions = {
   maxAge: 7 * 24 * 60 * 60 * 1000,
-  sameSite: "Strict", // Adjust according to your requirements
+  sameSite: "None", // Allows cross-site cookie usage
   httpOnly: true,
-  secure: true, 
+  secure: true, // Must be true for "sameSite: None"
 };
 
 
